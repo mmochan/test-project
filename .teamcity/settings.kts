@@ -24,7 +24,7 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 
 version = "2018.1"
 
-project { this.Project
+project {
     description = "Test DSL"
         buildType{
             id(id: "Build")
