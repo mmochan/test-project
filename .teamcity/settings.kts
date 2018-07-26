@@ -24,18 +24,25 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 
 version = "2018.1"
 
-project {
-    description = "Contains all other projects"
+project { this.Project
+    description = "Test DSL"
+        buildType{
+            id(id: "Build")
+            name = "Build"
 
-    features {
-        feature {
-            id = "PROJECT_EXT_1"
-            type = "ReportTab"
-            param("startPage", "coverage.zip!index.html")
-            param("title", "Code Coverage")
-            param("type", "BuildReportTab")
+            vcs { root(DslContext.settingRoot) }
+            steps {
+                gradle { tasks = "clean build" }
+            }
+            artifactsRules = "build/libs/app.jar"
+
+            triggers { vcs { } }
+
+            cleanup {
+                artifacts(dats = 2)
+                history(days = 3)
+            }
         }
-    }
 
     cleanup {
         preventDependencyCleanup = false
