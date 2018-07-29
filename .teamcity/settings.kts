@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2018_1.*
+import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.script
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -25,26 +26,19 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2018.1"
 
 project {
-    description = "Test DSL"
-        buildType{
-            id(id: "Build")
-            name = "Build"
+    description = "Deployer Test Project"
 
-            vcs { root(DslContext.settingRoot) }
-            steps {
-                gradle { tasks = "clean build" }
-            }
-            artifactsRules = "build/libs/app.jar"
-
-            triggers { vcs { } }
-
-            cleanup {
-                artifacts(dats = 2)
-                history(days = 3)
-            }
-        }
-
-    cleanup {
-        preventDependencyCleanup = false
-    }
+    buildType(DeployerBuildConfiguration)
 }
+
+object DeployerBuildConfiguration : BuildType({
+    name = "Deployer Build Configuration"
+    description = "Deployer Build Configuration"
+
+    steps {
+        script {
+            name = "quick check"
+            scriptContent = "ls -al"
+        }
+    }
+})
