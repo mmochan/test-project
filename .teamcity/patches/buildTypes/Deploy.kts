@@ -2,7 +2,6 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2018_1.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.gradle
-import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_1.ui.*
 
@@ -22,14 +21,6 @@ changeBuildType(RelativeId("Deploy")) {
     }
     steps {
         insert(2) {
-            maven {
-                goals = "clean test"
-                pomLocation = ".teamcity/pom.xml"
-                runnerArgs = "-Dmaven.test.failure.ignore=true"
-                mavenVersion = defaultProvidedVersion()
-            }
-        }
-        insert(3) {
             gradle {
                 tasks = "clean build"
                 buildFile = ""
