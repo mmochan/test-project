@@ -41,5 +41,8 @@ object Deploy : BuildType({
         script {
             scriptContent = "ls -al"
         }
+        script {
+            scriptContent = "pwd"
+        }
     }
 })
