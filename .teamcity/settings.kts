@@ -38,11 +38,11 @@ object Deploy : BuildType({
     }
 
     steps {
-        gradle {
-            name = "Snapshot Build"
-            tasks = "clean jar test"
-            jdkHome = "%env.JDK_18_x64%"
-        }
+        // gradle {
+        //     name = "Snapshot Build"
+        //     tasks = "clean jar test"
+        //     jdkHome = "%env.JDK_18_x64%"
+        // }
         script {
             scriptContent = "ls -al"
         }
@@ -58,10 +58,10 @@ object Deploy : BuildType({
         }
     }
 
-    features {
-        feature {
-            type = "swabra"
-        }
-    }
+    // features {
+    //     feature {
+    //         type = "swabra"
+    //     }
+    // }
 
 })
