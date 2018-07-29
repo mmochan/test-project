@@ -26,5 +26,12 @@ changeProject(DslContext.projectId) {
                 param("storage.s3.upload.presignedUrl.enabled", "true")
             }
         }
+        add {
+            feature {
+                type = "active_storage"
+                id = "PROJECT_EXT_6"
+                param("active.storage.feature.id", "PROJECT_EXT_5")
+            }
+        }
     }
 }
