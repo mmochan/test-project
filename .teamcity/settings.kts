@@ -38,11 +38,6 @@ object Deploy : BuildType({
     }
 
     steps {
-        // gradle {
-        //     name = "Snapshot Build"
-        //     tasks = "clean jar test"
-        //     jdkHome = "%env.JDK_18_x64%"
-        // }
         script {
             scriptContent = "ls -al"
         }
@@ -58,10 +53,13 @@ object Deploy : BuildType({
         }
     }
 
-    // features {
-    //     feature {
-    //         type = "swabra"
-    //     }
-    // }
+    tasks.create<Zip>("zip") {
+        description = "Archives sources in a zip file"
+        group = "Archive"
+
+        from(".")
+        setArchiveName("lambda.zip")
+    }
+
 
 })
