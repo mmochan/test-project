@@ -38,6 +38,11 @@ object Deploy : BuildType({
     }
 
     steps {
+        gradle {
+            name = "Snapshot Build"
+            tasks = "clean jar test"
+            jdkHome = "%env.JDK_18_x64%"
+        }
         script {
             scriptContent = "ls -al"
         }
@@ -45,4 +50,18 @@ object Deploy : BuildType({
             scriptContent = "pwd"
         }
     }
+    triggers {
+        vcs {
+            branchFilter = "+:<default>"
+            perCheckinTriggering = true
+            groupCheckinsByCommitter = true
+        }
+    }
+
+    features {
+        feature {
+            type = "swabra"
+        }
+    }
+
 })
