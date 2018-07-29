@@ -22,11 +22,6 @@ changeBuildType(RelativeId("Deploy")) {
     }
     steps {
         insert(2) {
-            script {
-                scriptContent = "call gradlew.bat"
-            }
-        }
-        insert(3) {
             maven {
                 goals = "clean test"
                 pomLocation = ".teamcity/pom.xml"
@@ -34,7 +29,7 @@ changeBuildType(RelativeId("Deploy")) {
                 mavenVersion = defaultProvidedVersion()
             }
         }
-        insert(4) {
+        insert(3) {
             gradle {
                 tasks = "clean build"
                 buildFile = ""
