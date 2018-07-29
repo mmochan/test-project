@@ -22,23 +22,23 @@ changeBuildType(RelativeId("Deploy")) {
     }
     steps {
         insert(2) {
-            gradle {
-                tasks = "clean build"
-                buildFile = ""
-                gradleWrapperPath = ""
-            }
-        }
-        insert(3) {
             script {
                 scriptContent = "call gradlew.bat"
             }
         }
-        insert(4) {
+        insert(3) {
             maven {
                 goals = "clean test"
                 pomLocation = ".teamcity/pom.xml"
                 runnerArgs = "-Dmaven.test.failure.ignore=true"
                 mavenVersion = defaultProvidedVersion()
+            }
+        }
+        insert(4) {
+            gradle {
+                tasks = "clean build"
+                buildFile = ""
+                gradleWrapperPath = ""
             }
         }
     }
