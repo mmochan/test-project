@@ -1,4 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.v2018_1.*
+import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.gradle
+import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.script
 
 /*
@@ -27,39 +29,32 @@ version = "2018.1"
 
 project {
 
-    buildType(Deploy)
+    buildType(Parseyaml)
 }
 
-object Deploy : BuildType({
-    name = "deploy"
+object Parseyaml : BuildType({
+    name = "parseyaml"
 
     vcs {
-        root(DslContext.settingsRoot)
+        root(AbsoluteId("TestProject"))
     }
 
     steps {
-        script {
-            scriptContent = "ls -al"
+        gradle {
+            tasks = "clean build"
+            buildFile = ""
+            gradleWrapperPath = ""
+        }
+        maven {
+            goals = "clean test"
+            pomLocation = ".teamcity/pom.xml"
+            runnerArgs = "-Dmaven.test.failure.ignore=true"
+            mavenVersion = defaultProvidedVersion()
         }
         script {
-            scriptContent = "pwd"
+            scriptContent = "call gradlew.bat"
+        }
+        gradle {
         }
     }
-    triggers {
-        vcs {
-            branchFilter = "+:<default>"
-            perCheckinTriggering = true
-            groupCheckinsByCommitter = true
-        }
-    }
-
-    tasks.create<Zip>("zip") {
-        description = "Archives sources in a zip file"
-        group = "Archive"
-
-        from(".")
-        setArchiveName("lambda.zip")
-    }
-
-
 })
