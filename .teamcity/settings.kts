@@ -76,7 +76,7 @@ object Parseyaml : BuildType({
             scriptContent = "call gradlew.bat"
         }
         gradle {
-
+            tasks = "TestMe"
         }
     }
 })
