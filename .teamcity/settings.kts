@@ -1,5 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.v2018_1.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.script
+import jetbrains.buildServer
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -64,6 +65,11 @@ object Parseyaml : BuildType({
             scriptContent = "echo 'Hello World'"
         }
     }
+        myMetaRunner {
+            name = "This name will be used by maven step"
+            goals = "build whatever_goal"
+            tasks = "more ant tasks"
+        }
 })
 
 
@@ -78,12 +84,12 @@ fun BuildSteps.myMetaRunner(config: MyConfigClass.() -> Unit) {
   val actualConfig = MyConfigClass() // new config instance
   actualConfig.config()  // apply closure to fill the config
   // use the config to create actual steps
-  maven {
-      name = actualConfig.name
-      goals = actualConfig.goals
-  }
+//   maven {
+//       name = actualConfig.name
+//       goals = actualConfig.goals
+//   }
 
-  ant {
-      name = actualConfig.tasks
-  }
+//   ant {
+//       name = actualConfig.tasks
+//   }
 }
