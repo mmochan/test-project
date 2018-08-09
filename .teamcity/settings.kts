@@ -69,6 +69,19 @@ object Parseyaml : BuildType({
             // tasks = "more ant tasks"
         }
     }
+    fun BuildSteps.myMetaRunner(config: MyConfigClass.() -> Unit) {
+    val actualConfig = MyConfigClass() // new config instance
+    actualConfig.config()  // apply closure to fill the config
+    // use the config to create actual steps
+    //   maven {
+    //       name = actualConfig.name
+    //       goals = actualConfig.goals
+    //   }
+
+    //   ant {
+    //       name = actualConfig.tasks
+    //   }
+    }
 })
 
 
@@ -77,18 +90,4 @@ class MyConfigClass {
   var goals = "build"
   var tasks = "build test"
   var someUnusedProperty = 0
-}
-
-fun BuildSteps.myMetaRunner(config: MyConfigClass.() -> Unit) {
-  val actualConfig = MyConfigClass() // new config instance
-  actualConfig.config()  // apply closure to fill the config
-  // use the config to create actual steps
-//   maven {
-//       name = actualConfig.name
-//       goals = actualConfig.goals
-//   }
-
-//   ant {
-//       name = actualConfig.tasks
-//   }
 }
