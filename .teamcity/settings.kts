@@ -59,24 +59,32 @@ object Parseyaml : BuildType({
     vcs {
         root(AbsoluteId("TestProject"))
     }
-
     steps {
-        gradle {
-            tasks = "clean build"
-            buildFile = ""
-            gradleWrapperPath = ""
-        }
-        maven {
-            goals = "clean test"
-            pomLocation = ".teamcity/pom.xml"
-            runnerArgs = "-Dmaven.test.failure.ignore=true"
-            mavenVersion = defaultProvidedVersion()
-        }
-        script {
-            scriptContent = "call gradlew.bat"
-        }
-        gradle {
-            tasks = "TestMe"
+        myMetaRunner {
+            name = "This name will be used by maven step"
+            goals = "build whatever_goal"
+            tasks = "more ant tasks"
         }
     }
 })
+
+class MyConfigClass {
+  var name = "Default Name"
+  var goals = "build"
+  var tasks = "build test"
+  var someUnusedProperty = 0
+}
+
+fun BuildSteps.myMetaRunner(config: MyConfigClass.() -> Unit) {
+  val actualConfig = MyConfigClass() // new config instance
+  actualConfig.config()  // apply closure to fill the config
+  // use the config to create actual steps
+  maven {
+      name = actualConfig.name
+      goals = actualConfig.goals
+  }
+
+  ant {
+      name = actualConfig.tasks
+  }
+}
