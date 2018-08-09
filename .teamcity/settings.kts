@@ -65,3 +65,11 @@ object Parseyaml : BuildType({
         }
     }
 })
+
+
+class MyConfigClass {
+  var name = "Default Name"
+  var goals = "build"
+  var tasks = "build test"
+  var someUnusedProperty = 0
+}
