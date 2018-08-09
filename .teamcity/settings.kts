@@ -1,6 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2018_1.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.script
-import jetbrains.buildServer
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -66,9 +65,9 @@ object Parseyaml : BuildType({
         }
     }
         myMetaRunner {
-            name = "This name will be used by maven step"
-            goals = "build whatever_goal"
-            tasks = "more ant tasks"
+            // name = "This name will be used by maven step"
+            // goals = "build whatever_goal"
+            // tasks = "more ant tasks"
         }
 })
 
