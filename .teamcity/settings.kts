@@ -63,12 +63,12 @@ object Parseyaml : BuildType({
             name = "FooBar"
             scriptContent = "echo 'Hello World'"
         }
-    }
         myMetaRunner {
             // name = "This name will be used by maven step"
             // goals = "build whatever_goal"
             // tasks = "more ant tasks"
         }
+    }
 })
 
 
