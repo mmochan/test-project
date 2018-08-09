@@ -1,6 +1,4 @@
 import jetbrains.buildServer.configs.kotlin.v2018_1.*
-import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.gradle
-import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.script
 
 /*
@@ -59,32 +57,11 @@ object Parseyaml : BuildType({
     vcs {
         root(AbsoluteId("TestProject"))
     }
+
     steps {
-        myMetaRunner {
-            name = "This name will be used by maven step"
-            goals = "build whatever_goal"
-            tasks = "more ant tasks"
+        script {
+            name = "FooBar"
+            scriptContent = "echo 'Hello World'"
         }
     }
 })
-
-class MyConfigClass {
-  var name = "Default Name"
-  var goals = "build"
-  var tasks = "build test"
-  var someUnusedProperty = 0
-}
-
-fun BuildSteps.myMetaRunner(config: MyConfigClass.() -> Unit) {
-  val actualConfig = MyConfigClass() // new config instance
-  actualConfig.config()  // apply closure to fill the config
-  // use the config to create actual steps
-  maven {
-      name = actualConfig.name
-      goals = actualConfig.goals
-  }
-
-  ant {
-      name = actualConfig.tasks
-  }
-}
